@@ -4,9 +4,7 @@
 
 ![astro-bento-portfolio | Bento-like Personal Porfolio Template](public/preview.png)
 
-To view a demo example, **[click here](https://sparkly-speculoos-0c9197.netlify.app/)**
-
-or my portfolio **[click here](https://gianmarco.xyz/)**
+To view my portfolio, **[click here](https://danielebonadonna.it/)**
 
 ## Features
 
@@ -52,8 +50,6 @@ or
 $ npm run dev
 ```
 
-## REMOVE THE umami analytics script tag (or replace it with your id) in `src/layouts/Layout.astro`
-
 # Configuration
 
 remember to replace the `site` and other properties with your data in `astro.config.mjs`
@@ -70,4 +66,6 @@ or
 
 ## Authors ❤️
 
-- Gianmarco - https://github.com/Ladvace
+- Gianmarco - Original Template - https://github.com/Ladvace
+- Daniele Bonadonna - Implementation
+
