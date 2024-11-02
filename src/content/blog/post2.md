@@ -1,18 +1,15 @@
 ---
 layout: ../../layouts/LayoutBlogPost.astro
-title: "Hello, World"
-description: "this is a post example"
-pubDate: 2023-01-21
+title: "This is a WIP Website"
+description: "This is a WIP Website"
+pubDate: 2024-11-02
 category: "intro"
 ---
 
-# Hi there!
+# This is a WIP Website
 
-This Markdown file creates a page at `your-domain.com/post1/`
+This website is currently being developed and its design will change overtime.
+This is not the final version. 
+Actually, this is the first version, based off a template (credits to Gianmarco Cavallo), and will be improved.
 
-It probably isn't styled much, but Markdown does support:
-
-- **bold** and _italics._
-- lists
-- [links](https://astro.build)
-- and more!
+Thank you for visiting my website.
