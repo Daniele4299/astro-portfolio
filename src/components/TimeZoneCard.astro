@@ -1,11 +1,11 @@
 ---
-import { getCurrentTimeInItaly, formatTimeForItaly } from "../lib/helpers";
+import { getCurrentTimeInItaly, formatTime24ForItaly } from "../lib/helpers";
 import Card from "./Card/index.astro";
 ---
 
 <script>
   import { onCleanup, onMount } from "solid-js";
-  import { formatTimeForItaly } from "../lib/helpers";
+  import { formatTime24ForItaly } from "../lib/helpers";
 
   let interval: ReturnType<typeof setInterval>;
 
@@ -14,7 +14,7 @@ import Card from "./Card/index.astro";
     const now = new Date();
 
     if (timeDisplay) {
-      timeDisplay.textContent = formatTimeForItaly(now);
+      timeDisplay.textContent = formatTime24ForItaly(now);
       timeDisplay.setAttribute("datetime", now.toISOString());
     }
   }
@@ -28,12 +28,13 @@ import Card from "./Card/index.astro";
   });
 </script>
 
-<Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Time zone">
+<Card colSpan="lg:col-span-1" rowSpan="md:row-span-1">
   <time
     datetime=""
     id="timeDisplay"
-    class="text-2xl xl:text-5xl xl:whitespace-nowrap w-50 xl:w-100 h-[calc(100%-28px)] font-serif flex justify-center items-center"
+    class="text-xl xl:text-2xl xl:whitespace-nowrap w-50 xl:w-100 h-[calc(100%-28px)] font-serif flex justify-center items-center"
+    style="width: 100%; height: 100%; font-family: monospace;"
   >
-    {formatTimeForItaly(getCurrentTimeInItaly())}
+    {formatTime24ForItaly(getCurrentTimeInItaly())}
   </time>
 </Card>

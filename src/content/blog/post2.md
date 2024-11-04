@@ -8,7 +8,9 @@ category: "intro"
 
 # This is a WIP Website
 
-This website is currently being developed and its design will change overtime.
+If you have been redirected to this page, it probably means you clicked on an unfinished feature.
+
+This website is currently being developed and its design and features will change overtime.
 This is not the final version. 
 Actually, this is the first version, based off a template (credits to Gianmarco Cavallo), and will be improved.
 

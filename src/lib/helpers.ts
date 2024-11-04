@@ -38,3 +38,17 @@ export function formatDate(date: Date): string {
     day: "numeric",
   });
 }
+
+export function formatTime24ForItaly(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Rome",
+  };
+
+  return new Intl.DateTimeFormat("it-IT", options).format(date);
+}
+
+

@@ -1,9 +1,8 @@
 export const LINKS = {
   github: "https://github.com/Daniele4299",
   linkedin: "https://www.linkedin.com/in/daniele-maria-bonadonna/",
-  medium: "https://medium.com/",
   discord: "https://discordapp.com/",
-  dribble: "https://dribbble.com/",
+  instagram: "https://instagram.com/"
 };
 
 export const loaderAnimation = [

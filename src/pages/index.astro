@@ -6,7 +6,11 @@ import ContactsCard from "../components/ContactsCard.astro";
 import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
+import RandomPokemonCard from "../components/RandomPokemonCard.astro";
 import Globe from "../components/Globe";
+import Button from "../components/Button.astro";
+import { Icon } from 'astro-icon/components';
+import Tooltip from "../components/Tooltip/index";
 ---
 
 <script>
@@ -42,7 +46,25 @@ import Globe from "../components/Globe";
     <AboutMe />
     <ContactsCard />
     <TimeZone />
+    <Card
+    colSpan="md:col-span-1"
+    rowSpan="md:row-span-1 flex gap-4"
+    title="Blog"
+    href="/blog"
+    />
     <Now />
+    <Card
+    colSpan="md:col-span-1"
+    rowSpan="md:row-span-2 flex gap-4"
+    title="Download My CV"
+    href="/blog"
+    />
+    <Card
+    colSpan="md:col-span-1"
+    rowSpan="md:row-span-1 flex gap-4"
+    title="Playground"
+    href="/blog"
+    />
     <Card
       colSpan="md:col-span-1"
       rowSpan="md:row-span-1"
@@ -54,12 +76,9 @@ import Globe from "../components/Globe";
         <Globe client:load />
       </div>
     </Card>
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-2 flex gap-4"
-      title="Blog"
-      href="/blog"
-    />
+
+    <RandomPokemonCard />
+
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
       <p class="text-xs">
         © 2024 · Created by <a

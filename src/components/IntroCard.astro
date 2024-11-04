@@ -19,30 +19,30 @@ import { Image } from "astro:assets";
         </p>
       </div>
       <div class="flex gap-4">
-        <a href={LINKS.github} aria-label="github profile" target="_blank">
-          <Button aria-label="github profile">
-            <Icon name="ri:github-fill" class="h-6" />
-            <span class="sr-only">GitHub Profile</span>
-          </Button>
-        </a>
         <a href={LINKS.linkedin} aria-label="linkedin profile" target="_blank">
           <Button aria-label="linkedin profile">
             <Icon name="ri:linkedin-box-fill" class="h-6" />
             <span class="sr-only">Linkedin Profile</span>
           </Button>
         </a>
-        <a href={LINKS.dribble} aria-label="dribble profile" target="_blank">
-          <Button aria-label="dribble profile">
-            <Icon name="ri:dribbble-fill" class="h-6" />
-            <span class="sr-only">Dribble Profile</span>
+        <a href={LINKS.github} aria-label="github profile" target="_blank">
+          <Button aria-label="github profile">
+            <Icon name="ri:github-fill" class="h-6" />
+            <span class="sr-only">GitHub Profile</span>
           </Button>
         </a>
-        <Tooltip client:visible>
-          <Button aria-label="easter egg btn">
-            <Icon name="ri:emotion-laugh-line" class="h-6" />
-            <span class="sr-only">Easter egg button</span>
+        <a href={LINKS.discord} aria-label="discord profile" target="_blank">
+          <Button aria-label="discord profile">
+            <Icon name="ri:discord-fill" class="h-6" />
+            <span class="sr-only">Discord Profile</span>
           </Button>
-        </Tooltip>
+        </a>
+        <a href={LINKS.instagram} aria-label="instagram profile" target="_blank">
+          <Button aria-label="instagram profile">
+            <Icon name="ri:instagram-fill" class="h-6" />
+            <span class="sr-only">Instagram Profile</span>
+          </Button>
+        </a>
       </div>
     </div>
     <Image
