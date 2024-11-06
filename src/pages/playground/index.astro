@@ -9,9 +9,9 @@ const projects = [
     slug: "/funnycards",
   },
   {
-    title: "Dragon Ball Tournament of Power Generator",
+    title: "Dragon Ball Tournament Generator",
     description:
-      "Dragon Ball tournament generator - Powered by Dragon Ball API",
+      "Powered by Dragon Ball API",
     slug: "/dragonball",
   },
 ];
@@ -37,7 +37,7 @@ const projects = [
       >Back</a
     >
     <h1 class="text-4xl font-bold mb-4 text-neutral-100">Playground</h1>
-    <div class="grid grid-cols-2 gap-4 w-full">
+    <div class="grid grid-cols-1 gap-4 w-full">
       {
         projects.map((project) => (
           <Card
@@ -45,9 +45,9 @@ const projects = [
             height="h-auto"
             colSpan="md:col-span-1"
           >
-            <div class="text-darkslate-50">
+            <div class="">
               <h2 class="font-semibold text-2xl">{project.title}</h2>
-              <p class="text-darkslate-300">{project.description}</p>
+              <p class="">{project.description}</p>
             </div>
           </Card>
         ))
