@@ -1,16 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card/index.astro";
 import IntroCard from "../components/IntroCard.astro";
 import ContactsCard from "../components/ContactsCard.astro";
 import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
-import RandomPokemonCard from "../components/RandomPokemonCard.astro";
-import Globe from "../components/Globe";
-import Button from "../components/Button.astro";
-import { Icon } from 'astro-icon/components';
-import Tooltip from "../components/Tooltip/index";
+import BlogCard from "../components/BlogCard.astro";
+import DownloadCVCard from "../components/DownloadCVCard.astro";
+import TravelCard from "../components/TravelCard.astro";
+import PlaygroundCard from "../components/PlaygroundCard.astro";
+import FooterCard from "../components/FooterCard.astro";
 ---
 
 <script>
@@ -45,54 +44,12 @@ import Tooltip from "../components/Tooltip/index";
     <IntroCard />
     <AboutMe />
     <ContactsCard />
-    <TimeZone />
-    <Card
-    colSpan="md:col-span-1"
-    rowSpan="md:row-span-1 flex gap-4"
-    title="Blog"
-    href="/blog"
-    />
     <Now />
-    <Card
-    colSpan="md:col-span-1"
-    rowSpan="md:row-span-2 flex gap-4"
-    title="Download My CV"
-    href="/blog"
-    />
-    <Card
-    colSpan="md:col-span-1"
-    rowSpan="md:row-span-1 flex gap-4"
-    title="Playground"
-    href="/blog"
-    />
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="Countries I visited"
-      href="travel"
-      colorText="text-neutral-900"
-    >
-      <div class="h-full w-full absolute inset-0 -z-10">
-        <Globe client:load />
-      </div>
-    </Card>
-
-    <RandomPokemonCard />
-
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">
-        © 2024 · Created by <a
-        href="https://github.com/Daniele4299"
-        target="_blank"
-        class="text-red-500">Daniele</a> with <a
-          href="https://astro.build/"
-          target="_blank"
-          class="text-red-500">Astro</a>. 
-        Template by <a
-        href="https://github.com/Ladvace"
-        target="_blank"
-        class="text-red-500">Gianmarco</a>. 
-      </p>
-    </Card>
+    <DownloadCVCard />
+    <BlogCard />
+    <TravelCard />
+    <PlaygroundCard />
+    <TimeZone />
+    <FooterCard />
   </main>
 </Layout>

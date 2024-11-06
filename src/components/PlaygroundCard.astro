@@ -1,0 +1,163 @@
+---
+import Card from "./Card/index.astro";
+---
+
+<Card colSpan="lg:col-span-1" rowSpan="md:row-span-1" title="Playground" href="/playground">
+  <div class="carousel-container">
+    <div class="pokeball-fall">
+      <!-- Poké Ball con classi per randomizzare di più la posizione -->
+      <img src="pokeball_animation.gif" class="pokeball small delay1" />
+      <img src="pokeball_animation.gif" class="pokeball medium delay2" />
+      <img src="pokeball_animation.gif" class="pokeball large delay3" />
+      <img src="pokeball_animation.gif" class="pokeball small delay4" />
+      <img src="pokeball_animation.gif" class="pokeball medium delay5" />
+      <img src="pokeball_animation.gif" class="pokeball large delay6" />
+      <img src="pokeball_animation.gif" class="pokeball small delay7" />
+      <img src="pokeball_animation.gif" class="pokeball medium delay8" />
+      <img src="pokeball_animation.gif" class="pokeball large delay9" />
+      
+      <!-- Immagine di Sonic ridimensionata per l'effetto corsa -->
+      <img src="sonic_running_animation.gif" class="sonic" />
+
+      <!-- Immagine di Pikachu che corre in direzione opposta e specchiata -->
+      <img src="pikachu_running_animation.gif" class="pikachu" />
+    </div>
+  </div>
+</Card>
+
+<style>
+.carousel-container {
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+}
+
+.pokeball-fall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Posizione delle Poké Ball */
+.pokeball {
+  position: absolute;
+  top: -100px;
+  animation: fall linear infinite;
+}
+
+.pokeball.small { width: 30px; animation-duration: 6s; }
+.pokeball.medium { width: 50px; animation-duration: 8s; }
+.pokeball.large { width: 70px; animation-duration: 10s; }
+
+/* Classi per ritardi casuali */
+.delay1 { left: 10%; animation-delay: 0s; }
+.delay2 { left: 25%; animation-delay: 0.5s; }
+.delay3 { left: 40%; animation-delay: 1s; }
+.delay4 { left: 55%; animation-delay: 1.5s; }
+.delay5 { left: 70%; animation-delay: 2s; }
+.delay6 { left: 85%; animation-delay: 2.5s; }
+.delay7 { left: 15%; animation-delay: 3s; }
+.delay8 { left: 45%; animation-delay: 3.5s; }
+.delay9 { left: 65%; animation-delay: 4s; }
+
+/* Animazione di caduta */
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Animazione di Sonic */
+.sonic {
+  position: absolute;
+  bottom: 10%;
+  left: -100px;
+  width: 40px; /* Aumentato per una dimensione migliore */
+  animation: run 8s linear infinite;
+  animation-delay: 2s;
+}
+
+@keyframes run {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+/* Animazione di Pikachu */
+.pikachu {
+  position: absolute;
+  bottom: 10%;
+  right: -100px;
+  width: 70px; /* Aumentato per renderlo più grande */
+  transform: scaleX(-1); /* Specchia l'immagine */
+  animation: run-reverse 8s linear infinite;
+  animation-delay: 6s;
+}
+
+@keyframes run-reverse {
+  0% {
+    transform: translateX(100px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(-100vw) scaleX(-1);
+  }
+}
+
+/* Media query per schermi inferiori a 768px */
+@media (max-width: 768px) {
+  /* Animazione di Sonic */
+  .sonic {
+    position: absolute;
+    bottom: -6vw; /* Inizia fuori dalla card */
+    left: -25vw; /* Posizione di partenza fuori dalla card */
+    width: 40px; /* Dimensione relativa */
+    animation: run 3s linear infinite;
+    animation-delay: 2.5s;
+  }
+
+  @keyframes run {
+    0% {
+      transform: translateX(-125vw);
+    }
+    100% {
+      transform: translateX(125vw); /* Assicurati che esca completamente dalla card */
+    }
+  }
+
+  /* Animazione di Pikachu */
+  .pikachu {
+    position: absolute;
+    bottom: -6vw; /* Inizia fuori dalla card */
+    right: -25vw; /* Posizione di partenza fuori dalla card */
+    width: 70px; /* Dimensione relativa */
+    transform: scaleX(-1); /* Specchia l'immagine */
+    animation: run-reverse 3s linear infinite;
+    animation-delay: 4s;
+  }
+
+  @keyframes run-reverse {
+    0% {
+      transform: translateX(125vw) scaleX(-1); /* Inizia fuori dalla card */
+    }
+    100% {
+      transform: translateX(-125vw) scaleX(-1); /* Esce dalla card */
+    }
+  }
+}
+</style>

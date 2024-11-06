@@ -1,0 +1,30 @@
+---
+import Card from "./Card/index.astro";
+---
+
+<Card colSpan="lg:col-span-1" rowSpan="md:row-span-1" title="Download My CV" href="/cv_website.pdf">
+  <div class="background-container">
+    <img src="cv_animation.gif" class="cv-image" />
+  </div>
+</Card>
+
+<style>
+    .background-container {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.2;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        rotate: 40deg;
+        overflow: visible;
+    }
+
+    .cv-image {
+        width: 70%; /* Adatta la percentuale a piacere per la dimensione desiderata */
+        height: auto; /* Mantiene il rapporto di aspetto */
+        margin: auto; /* Centra l'immagine all'interno del contenitore */
+        transform: translate(-25%, 25%); /* Sposta a sinistra e in basso l'immagine */
+    }
+</style>

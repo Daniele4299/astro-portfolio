@@ -1,0 +1,45 @@
+---
+import RandomPokemonCard from "../../components/RandomPokemonCard.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<script>
+  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
+  import { loaderAnimation } from "../../lib/constants";
+  const cards = document.querySelectorAll(".card");
+
+  const sequence = [
+    loaderAnimation,
+    [
+      cards,
+      { y: ["40%", "0%"], opacity: [0, 1] },
+      {
+        at: "-0.1",
+        duration: 0.4,
+        delay: stagger(0.3),
+        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+      },
+    ],
+  ];
+
+  timeline(sequence as TimelineDefinition);
+</script>
+
+<Layout
+  title="Playground - Funny Cards"
+  description="Just some funny cards"
+>
+<div class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 text-white"> <a
+    href="/playground"
+    class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
+    >Back</a
+    > </div>
+<div>  <main
+    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+  >
+
+
+    <RandomPokemonCard>
+  </main></div>
+
+</Layout>
