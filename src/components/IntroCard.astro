@@ -30,16 +30,18 @@ import { Image } from "astro:assets";
             <span class="sr-only">GitHub Profile</span>
           </Button>
         </a>
-        <a href={LINKS.discord} aria-label="discord profile" target="_blank">
-          <Button aria-label="discord profile">
-            <Icon name="ri:discord-fill" class="h-6" />
-            <span class="sr-only">Discord Profile</span>
-          </Button>
-        </a>
+
         <a href={LINKS.instagram} aria-label="instagram profile" target="_blank">
           <Button aria-label="instagram profile">
             <Icon name="ri:instagram-fill" class="h-6" />
             <span class="sr-only">Instagram Profile</span>
+          </Button>
+        </a>
+
+        <a href="#" aria-label="change image" id="changeImageBtn">
+          <Button aria-label="change image">
+            <Icon name="ri:emoji-sticker-fill" class="h-6" />
+            <span class="sr-only">Change Image</span>
           </Button>
         </a>
       </div>
@@ -48,8 +50,37 @@ import { Image } from "astro:assets";
       width="300"
       height="300"
       src="/me.webp"
-      class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
-      alt="memoji of daniele"
+      class="fade-image w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
+      alt="Daniele"
     />
   </div>
 </Card>
+
+<script type="module">
+  document.getElementById('changeImageBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    const image = document.querySelector('img[alt="Daniele"]');
+    
+    if (image) {
+      image.style.opacity = 0;
+
+      setTimeout(function() {
+        image.src = (image.src.includes('me.webp')) ? '/meReal.webp' : '/me.webp';
+
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+          image.style.opacity = 0.5;
+        } else {
+          image.style.opacity = 1;
+        }
+      }, 500);
+    }
+  });
+</script>
+
+<style>
+  .fade-image {
+    transition: opacity 0.5s ease-in-out;
+  }
+</style>

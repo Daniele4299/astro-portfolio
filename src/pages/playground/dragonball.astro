@@ -1,28 +1,44 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+// Definisci le interfacce per i dati
+interface Character {
+  name: string;
+  image: string;
+}
+
+interface Transformation {
+  name: string;
+  image?: string;
+}
+
+// Recupera i dati dei personaggi e delle trasformazioni
+let characters: Character[] = [];
+let transformations: Transformation[] = [];
+
+try {
+  const charactersResponse = await fetch('https://dragonball-api.com/api/characters?limit=99999');
+  const transformationsResponse = await fetch('https://dragonball-api.com/api/transformations');
+
+  const charactersData = await charactersResponse.json();
+  const transformationsData = await transformationsResponse.json();
+
+  // Accedi alla proprietà 'items' per ottenere i personaggi
+  if (Array.isArray(charactersData.items)) {
+    characters = charactersData.items;
+  } else {
+    console.error('Errore nel recupero dei personaggi', charactersData);
+  }
+
+  if (Array.isArray(transformationsData)) {
+    transformations = transformationsData;
+  } else {
+    console.error('Errore nel recupero delle trasformazioni', transformationsData);
+  }
+} catch (error) {
+  console.error('Errore nelle richieste API:', error);
+}
 ---
-
-<script>
-  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
-  import { loaderAnimation } from "../../lib/constants";
-  const cards = document.querySelectorAll(".card");
-
-  const sequence = [
-    loaderAnimation,
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.3),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
-      },
-    ],
-  ];
-
-  timeline(sequence as TimelineDefinition);
-</script>
 
 <Layout
   title="Playground - Dragon Ball Tournament Generator"
@@ -38,10 +54,76 @@ import Layout from "../../layouts/Layout.astro";
   </div>
 
   <main
-    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+    class="text-white m-auto p-2 grid gap-4 max-w-6xl overflow-y-auto relative w-full sm:p-4 sm:gap-2"
   >
+    <h1 class="text-2xl mb-4">Dragon Ball Tournament Generator</h1>
 
-    WORK IN PROGRESS
+    <!-- Visualizza i personaggi -->
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2">
+      {characters.length > 0 ? (
+        characters.map((character: Character) => (
+          <div class="card bg-neutral-800 p-4 rounded-lg flex items-center justify-center flex-col">
+            <div class="w-full h-40 overflow-hidden relative mb-2 rounded-t-lg">
+              <img
+                src={character.image}
+                alt={character.name}
+                class="w-full h-full object-cover absolute top-0 left-0"
+                style="object-position: top;"
+              />
+            </div>
+            <h2 class="text-xl text-center">{character.name}</h2>
+          </div>
+        ))
+      ) : (
+        <p>No characters available.</p>
+      )}
+    </div>
 
+    <h2 class="text-xl mt-8 mb-4">Transformations</h2>
+
+    <!-- Visualizza le trasformazioni -->
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2">
+      {transformations.length > 0 ? (
+        transformations.map((transformation: Transformation) => (
+          <div class="card bg-neutral-800 p-4 rounded-lg flex items-center justify-center flex-col">
+            <h3 class="text-lg text-center">{transformation.name}</h3>
+            {transformation.image && (
+              <div class="w-full h-40 overflow-hidden relative mt-2 rounded-t-lg">
+                <img
+                  src={transformation.image}
+                  alt={transformation.name}
+                  class="w-full h-full object-cover absolute top-0 left-0"
+                  style="object-position: top;"
+                />
+              </div>
+            )}
+          </div>
+        ))
+      ) : (
+        <p>No transformations available.</p>
+      )}
+    </div>
   </main>
+
+  <script>
+    import { stagger, spring, timeline, type TimelineDefinition } from "motion";
+    import { loaderAnimation } from "../../lib/constants";
+    const cards = document.querySelectorAll(".card");
+
+    const sequence = [
+      loaderAnimation,
+      [
+        cards,
+        { y: ["40%", "0%"], opacity: [0, 1] },
+        {
+          at: "-0.1",
+          duration: 0.4,
+          delay: stagger(0.3),
+          easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+        },
+      ],
+    ];
+
+    timeline(sequence as TimelineDefinition);
+  </script>
 </Layout>
