@@ -1,27 +1,24 @@
 ---
 import Card from "./Card/index.astro"; 
 --- 
-<Card 
-  colSpan="md:col-span-1"
-  rowSpan="md:row-span-1"
->
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
   <div class="pokemon-card-container">
     <div class="flex items-center justify-center h-full relative">
-      <div id="pokemonContainer" class="flex flex-col items-center justify-center h-full gap-4">
-        <!-- Sezione che mostrerà il Pokémon selezionato -->
-        <div id="pokemonDisplay" class="text-center text-lg font-bold hidden flex items-center">
-          <img id="pokemonSprite" src="" alt="" class="w-24 h-24 mr-2 hidden" />
-          <span id="pokemonText"></span>
+      <div class="pokemon-card-content flex flex-col items-center justify-center h-full gap-4">
+        <div class="pokemon-display text-center text-sm font-bold hidden flex items-center">
+          <img class="pokemon-sprite w-24 h-24 mr-2 hidden" />
+          <span class="pokemon-text"></span>
         </div>
 
-        <div id="pokeballButtons" class="flex justify-center items-center gap-4">
+        <div class="pokeball-buttons-container flex justify-center items-center gap-4">
           {Array.from({ length: 3 }, (_, index) => (
             <button class="pokeball-button" aria-label={`Pokéball ${index + 1}`} />
           ))}
         </div>
       </div>
 
-      <div id="fadeOverlay" class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-500"></div>
+      <div class="fade-overlay fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-500"></div>
     </div>
   </div>
 </Card>
@@ -34,45 +31,49 @@ import Card from "./Card/index.astro";
       "Snivy", "Tepig", "Oshawott"
     ];
 
-    const buttons = document.querySelectorAll(".pokeball-button");
-    const pokemonDisplay = document.getElementById("pokemonDisplay");
-    const pokemonSprite = document.getElementById("pokemonSprite") as HTMLImageElement;
-    const pokemonText = document.getElementById("pokemonText");
-    const pokeballButtonsContainer = document.getElementById("pokeballButtons");
-    const fadeOverlay = document.getElementById("fadeOverlay");
+    const cards = document.querySelectorAll(".pokemon-card-container");
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        if (fadeOverlay) {
-          fadeOverlay.classList.replace("opacity-0", "opacity-100");
-          fadeOverlay.classList.remove("pointer-events-none");
+    cards.forEach(card => {
+      const buttons = card.querySelectorAll(".pokeball-button");
+      const pokemonDisplay = card.querySelector(".pokemon-display");
+      const pokemonSprite = card.querySelector(".pokemon-sprite") as HTMLImageElement;
+      const pokemonText = card.querySelector(".pokemon-text");
+      const pokeballButtonsContainer = card.querySelector(".pokeball-buttons-container");
+      const fadeOverlay = card.querySelector(".fade-overlay");
 
-          setTimeout(() => {
-            const randomPokemon = starterPokemon[Math.floor(Math.random() * starterPokemon.length)];
-            if (pokemonText) {
-              pokemonText.textContent = `You caught a ${randomPokemon}!`;
-            }
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (fadeOverlay) {
+            fadeOverlay.classList.replace("opacity-0", "opacity-100");
+            fadeOverlay.classList.remove("pointer-events-none");
 
-            if (pokemonSprite) {
-              pokemonSprite.src = `https://img.pokemondb.net/sprites/black-white/normal/${randomPokemon.toLowerCase()}.png`;
-              pokemonSprite.alt = randomPokemon;
-              pokemonSprite.classList.remove("hidden");
-            }
+            setTimeout(() => {
+              const randomPokemon = starterPokemon[Math.floor(Math.random() * starterPokemon.length)];
+              if (pokemonText) {
+                pokemonText.textContent = `You caught a ${randomPokemon}!`;
+              }
 
-            if (pokemonDisplay) {
-              pokemonDisplay.classList.remove("hidden");
-            }
+              if (pokemonSprite) {
+                pokemonSprite.src = `https://img.pokemondb.net/sprites/black-white/normal/${randomPokemon.toLowerCase()}.png`;
+                pokemonSprite.alt = randomPokemon;
+                pokemonSprite.classList.remove("hidden");
+              }
 
-            if (pokeballButtonsContainer) {
-              pokeballButtonsContainer.classList.add("hidden");
-            }
+              if (pokemonDisplay) {
+                pokemonDisplay.classList.remove("hidden");
+              }
 
-            if (fadeOverlay) {
-              fadeOverlay.classList.replace("opacity-100", "opacity-0");
-              fadeOverlay.classList.add("pointer-events-none");
-            }
-          }, 500);
-        }
+              if (pokeballButtonsContainer) {
+                pokeballButtonsContainer.classList.add("hidden");
+              }
+
+              if (fadeOverlay) {
+                fadeOverlay.classList.replace("opacity-100", "opacity-0");
+                fadeOverlay.classList.add("pointer-events-none");
+              }
+            }, 500);
+          }
+        });
       });
     });
   });
@@ -80,12 +81,12 @@ import Card from "./Card/index.astro";
 
 <style>
   .pokeball-button {
-    width: 60px; /* Dimensione del bottone */
-    height: 60px; /* Dimensione del bottone */
-    background: url('/pokeball_animation.gif') no-repeat center center; /* Aggiungi la GIF come sfondo */
-    background-size: contain; /* Adatta la GIF alla dimensione del bottone */
-    border: none; /* Rimuovi il bordo */
-    cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+    width: 60px;
+    height: 60px;
+    background: url('/pokeball_animation.gif') no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
     transition: transform 0.2s ease;
   }
 
@@ -97,32 +98,30 @@ import Card from "./Card/index.astro";
     display: none;
   }
 
-  #fadeOverlay {
+  .fade-overlay {
     z-index: 10;
   }
 
-  /* Modifica solo per dispositivi mobili */
   @media (max-width: 768px) {
     .pokemon-card-container {
-      min-height: 100px; /* Imposta l'altezza minima solo su dispositivi mobili */
-      display: flex; /* Assicura che il contenitore usi flexbox */
-      flex-direction: column; /* Allinea i contenuti in colonna */
-      justify-content: center; /* Centra il contenuto verticalmente */
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .pokeball-button {
-    width: 80px; /* Aumenta la dimensione del bottone su dispositivi mobili */
-    height: 80px; /* Aumenta la dimensione del bottone su dispositivi mobili */
-  }
+      width: 80px;
+      height: 80px;
+    }
   }
 
-  /* Su desktop, assicuriamoci che il contenuto sia centrato */
   @media (min-width: 769px) {
     .pokemon-card-container {
-      height: 100%; /* Usa 100% dell'altezza disponibile */
+      height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Centra verticalmente */
+      justify-content: center;
     }
   }
 </style>
