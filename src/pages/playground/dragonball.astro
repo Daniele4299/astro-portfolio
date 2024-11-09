@@ -1,49 +1,52 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
-// Definisci le interfacce per i dati
-interface Character {
-  name: string;
-  image: string;
-}
+// Recupero dei personaggi
+const characters = await fetch('https://genshinlab.com/dragon-ball-sparking-zero-characters/')
+  .then((response) => response.text())
+  .then((html) => {
+    const characterRegex = /<article class="elementor-post[^>]*">([\s\S]*?)<\/article>/g;
+    const nameRegex = /<h3 class="elementor-post__title">\s*<a[^>]*?>([^<]+)<\/a>/;
+    const imageRegex = /<img[^>]*src="([^"]+)"[^>]*>/;
+    const dpCostRegex = /cost-cost-(\d+)/;
 
-interface Transformation {
-  name: string;
-  image?: string;
-}
+    const characters = [];
+    let match;
 
-// Recupera i dati dei personaggi e delle trasformazioni
-let characters: Character[] = [];
-let transformations: Transformation[] = [];
+    while ((match = characterRegex.exec(html)) !== null) {
+      const characterHtml = match[0];
 
-try {
-  const charactersResponse = await fetch('https://dragonball-api.com/api/characters?limit=99999');
-  const transformationsResponse = await fetch('https://dragonball-api.com/api/transformations');
+      const nameMatch = nameRegex.exec(characterHtml);
+      const name = nameMatch ? nameMatch[1].trim() : 'Nome non disponibile';
+      
+      const imageMatch = imageRegex.exec(characterHtml);
+      const image = imageMatch ? imageMatch[1] : '';
+      
+      const dpCostMatch = dpCostRegex.exec(characterHtml);
+      const dpCost = dpCostMatch ? parseInt(dpCostMatch[1], 10) : 'Costo non disponibile';
 
-  const charactersData = await charactersResponse.json();
-  const transformationsData = await transformationsResponse.json();
+      characters.push({ name, image, dpCost });
+    }
 
-  // Accedi alla proprietà 'items' per ottenere i personaggi
-  if (Array.isArray(charactersData.items)) {
-    characters = charactersData.items;
-  } else {
-    console.error('Errore nel recupero dei personaggi', charactersData);
-  }
+    return characters;
+  });
 
-  if (Array.isArray(transformationsData)) {
-    transformations = transformationsData;
-  } else {
-    console.error('Errore nel recupero delle trasformazioni', transformationsData);
-  }
-} catch (error) {
-  console.error('Errore nelle richieste API:', error);
+// Variabili di stato per il filtro
+let filteredCharacters = [...characters];
+let searchQuery = '';
+let selectedCost: number | null = null;
+
+// Funzione di filtro
+function filterCharacters() {
+  filteredCharacters = characters.filter((character) => {
+    const matchesName = character.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCost = selectedCost === null || character.dpCost === selectedCost;
+    return matchesName && matchesCost;
+  });
 }
 ---
 
-<Layout
-  title="Playground - Dragon Ball Tournament Generator"
-  description="Powered by Dragon Ball API"
->
+<Layout title="Playground - Dragon Ball Tournament Generator" description="Powered by Dragon Ball Sparking">
   <div class="w-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 text-white">
     <a
       href="/playground"
@@ -53,15 +56,38 @@ try {
     </a>
   </div>
 
-  <main
-    class="text-white m-auto p-2 grid gap-4 max-w-6xl overflow-y-auto relative w-full sm:p-4 sm:gap-2"
-  >
+  <main class="text-white m-auto p-2 grid gap-4 max-w-6xl overflow-y-auto relative w-full sm:p-4 sm:gap-2">
     <h1 class="text-2xl mb-4">Dragon Ball Tournament Generator</h1>
 
-    <!-- Visualizza i personaggi -->
+    <p class="text-lg mb-2">Personaggi selezionabili: {filteredCharacters.length}</p>
+
+    <div class="mb-4">
+      <!-- Barra di ricerca -->
+      <input
+        type="text"
+        placeholder="Cerca per nome..."
+        class="bg-neutral-800 text-white p-2 rounded-md"
+        oninput="searchQuery = this.value; filterCharacters();"
+      />
+    </div>
+
+    <div class="mb-4">
+      <span>Filtra per costo DP:</span>
+      <div class="flex gap-2 mt-2">
+        {[...Array(10).keys()].map((i) => (
+          <button
+            class="bg-neutral-800 text-white p-2 rounded-md"
+            onclick={`selectedCost = selectedCost === ${i + 1} ? null : ${i + 1}; filterCharacters();`}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-2">
-      {characters.length > 0 ? (
-        characters.map((character: Character) => (
+      {filteredCharacters.length > 0 ? (
+        filteredCharacters.map((character) => (
           <div class="card bg-neutral-800 p-4 rounded-lg flex items-center justify-center flex-col">
             <div class="w-full h-40 overflow-hidden relative mb-2 rounded-t-lg">
               <img
@@ -72,35 +98,11 @@ try {
               />
             </div>
             <h2 class="text-xl text-center">{character.name}</h2>
+            <p>Costo in DP: {character.dpCost}</p>
           </div>
         ))
       ) : (
         <p>No characters available.</p>
-      )}
-    </div>
-
-    <h2 class="text-xl mt-8 mb-4">Transformations</h2>
-
-    <!-- Visualizza le trasformazioni -->
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2">
-      {transformations.length > 0 ? (
-        transformations.map((transformation: Transformation) => (
-          <div class="card bg-neutral-800 p-4 rounded-lg flex items-center justify-center flex-col">
-            <h3 class="text-lg text-center">{transformation.name}</h3>
-            {transformation.image && (
-              <div class="w-full h-40 overflow-hidden relative mt-2 rounded-t-lg">
-                <img
-                  src={transformation.image}
-                  alt={transformation.name}
-                  class="w-full h-full object-cover absolute top-0 left-0"
-                  style="object-position: top;"
-                />
-              </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>No transformations available.</p>
       )}
     </div>
   </main>
